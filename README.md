@@ -1,5 +1,9 @@
 # ghclasspeer
 
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/rundel/ghclasspeer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rundel/ghclasspeer/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
 > **Status: experimental and untested.** This package is a work-in-progress port of the peer review workflow from the `peer_review` branch of [ghclass](https://github.com/rundel/ghclass) into a standalone sister package. None of the functions have been exercised against a live course yet — expect rough edges, and please do not rely on this in production until it has been validated.
 
 `ghclasspeer` extends [ghclass](https://github.com/rundel/ghclass) with tools for setting up, distributing, collecting, and scoring peer review assignments for courses hosted on GitHub.
