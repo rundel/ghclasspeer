@@ -52,11 +52,12 @@ format_folder = function(folder, path) {
 }
 
 
-peer_file_place = function(repo_files, target_repo, input, message, branch, verbose, overwrite) {
-  purrr::walk(
-    input,
-    function(y) {
-      gh_path = glue::glue("{y[[1]]}/{fs::path_file(y[[2]])}")
+peer_file_place = function(repo_files, target_repo, folder, file, message, branch, verbose, overwrite) {
+  grid = tidyr::expand_grid(folder = folder, file = file)
+  purrr::pwalk(
+    grid,
+    function(folder, file) {
+      gh_path = glue::glue("{folder}/{fs::path_file(file)}")
 
       if (!(gh_path %in% repo_files[['path']]) |
           overwrite) {
@@ -69,7 +70,7 @@ peer_file_place = function(repo_files, target_repo, input, message, branch, verb
         peer_repo_put_file(
           repo = target_repo,
           path = gh_path,
-          content = ghclass::read_bin_file(y[[2]]),
+          content = ghclass::read_bin_file(file),
           message = message,
           branch = branch,
           verbose = verbose,

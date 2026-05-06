@@ -20,7 +20,6 @@
 #' prefix = prefix)
 #' }
 #'
-#' @importFrom rlang .data
 #' @family peer review functions
 #'
 #' @export
@@ -71,15 +70,19 @@ peer_score_rating = function(org, roster, form_rating, double_blind = TRUE,
   )
 
   # Getting data frame in right format
-  out_temp = tidyr::gather(
+  out_temp = tidyr::pivot_longer(
     out_temp,
-    "q_name",
-    "q_value",
-    -.data$user,
-    -.data$rev_no
+    cols = -c("user", "rev_no"),
+    names_to = "q_name",
+    values_to = "q_value"
   )
-  out_temp = tidyr::unite(out_temp, "new", c("rev_no", "q_name"))
-  out_temp = tidyr::spread(out_temp, .data$new, .data$q_value)
+  out_temp = tidyr::pivot_wider(
+    out_temp,
+    id_cols = "user",
+    names_from = c("rev_no", "q_name"),
+    values_from = "q_value",
+    names_sep = "_"
+  )
   out = merge(out_temp, roster, all.y = T)
 
   out = out[, union(names(roster), names(out))]

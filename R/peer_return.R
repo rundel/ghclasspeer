@@ -74,7 +74,7 @@ peer_return = function(org, roster, path, form_review = NULL, local_path_rating 
     }
   )
 
-  # The `purrr::map_df` statement below goes through multiple steps in the
+  # The `purrr::map_dfr` statement below goes through multiple steps in the
   # return review process: add rating forms (if applicable), copy authors'
   # original content into reviewer-specific folders on authors' repositories
   # (to create a difference view on GitHub for the author), copy select
@@ -83,7 +83,7 @@ peer_return = function(org, roster, path, form_review = NULL, local_path_rating 
   # We keep all the steps in a single iteration over author repositories
   # in order to reduce calls to the GitHub API, which are limited to 5000
   # per hour.
-  out = purrr::map_df(
+  out = purrr::map_dfr(
     seq_len(nrow(rdf)),
     function(x) {
       repo_aut = rdf[['repo_aut']][x]

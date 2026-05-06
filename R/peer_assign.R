@@ -47,7 +47,7 @@ peer_assign = function(org, roster, path = NULL, local_path_review = NULL,
   content_review = local_path_content_grab(local_path = local_path_review,
                                            check_rmd = TRUE)
 
-  # The `purrr::map_df` statement below goes through multiple steps in the
+  # The `purrr::map_dfr` statement below goes through multiple steps in the
   # assignment process: i. add review forms (if applicable), determine which
   # files should be moved from author repositories (if no path is specified
   # by user), grab the content of the paths, and copy them to each of the
@@ -55,7 +55,7 @@ peer_assign = function(org, roster, path = NULL, local_path_review = NULL,
   # We keep all the steps in a single iteration over author repositories
   # in order to reduce calls to the GitHub API, which are limited to 5000
   # per hour.
-  out = purrr::map_df(
+  out = purrr::map_dfr(
     unique(rdf[['aut']]),
     function(aut) {
       sub = rdf[rdf[['aut']] == aut, ]

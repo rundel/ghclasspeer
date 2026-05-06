@@ -56,7 +56,8 @@ peer_file_add_aut = function(org, roster, local_path, double_blind = TRUE, prefi
       peer_file_place(
         repo_files = repo_files,
         target_repo = aut,
-        input = purrr::cross2(rev, local_path),
+        folder = rev,
+        file = local_path,
         message = message,
         branch = branch,
         verbose = verbose,
