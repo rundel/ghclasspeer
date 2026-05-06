@@ -23,21 +23,17 @@ BugReports: https://github.com/rundel/ghclasspeer/issues
 Depends:
     R (>= 3.4.0)
 Imports:
-    ghclass,
+    ghclass (>= 0.4.0),
     base64enc,
     cli (>= 3.0.0),
     fs,
-    gh,
     glue,
     purrr,
     readr,
-    rlang,
     rmarkdown,
     tibble,
     tidyr,
     withr
-Remotes:
-    rundel/ghclass@expose-peer-internals
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Config/roxygen2/version: 8.0.0
