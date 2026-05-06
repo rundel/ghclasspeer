@@ -12,7 +12,7 @@ Authors@R:
              email = "mine@rstudio.com"),
       person(given = "Therese",
              family = "Anders",
-             role = "ctb",
+             role = "aut",
              email = "tanders@usc.edu"))
 Description: Extends 'ghclass' with workflows for setting up,
     distributing, collecting, and scoring peer review assignments
