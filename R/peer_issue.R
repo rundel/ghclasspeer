@@ -1,25 +1,11 @@
-github_api_peer_issue_create = function(repo, title, body, assignee, labels) {
-  gh::gh(
-    "POST /repos/:owner/:repo/issues",
-    owner = ghclass::get_repo_owner(repo),
-    repo = ghclass::get_repo_name(repo),
-    title = title,
-    body = body,
-    assignee = assignee,
-    labels = labels,
-    .token = ghclass::github_get_token()
-  )
-}
-
 github_api_label_create = function(repo, name, color, description) {
-  gh::gh(
-    "POST /repos/:owner/:repo/labels",
+  ghclass::ghclass_api_v3_req(
+    endpoint = "POST /repos/:owner/:repo/labels",
     owner = ghclass::get_repo_owner(repo),
     repo = ghclass::get_repo_name(repo),
     name = name,
     color = color,
-    description = description,
-    .token = ghclass::github_get_token()
+    description = description
   )
 }
 
