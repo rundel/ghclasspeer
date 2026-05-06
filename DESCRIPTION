@@ -26,7 +26,6 @@ Imports:
     ghclass,
     base64enc,
     cli (>= 3.0.0),
-    dplyr,
     fs,
     gh,
     glue,
