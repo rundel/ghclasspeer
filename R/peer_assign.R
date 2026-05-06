@@ -10,7 +10,7 @@
 #' @param suffix Character. Common repository name suffix.
 #' @param exclude_pattern Character. File extensions of files to not be moved to reviewer repositories if `path` is `NULL`, defaults to `c(".gitignore", ".Rhistory", "*.Rproj", "*.html", "*.md", "*.pdf")`.
 #' @param message Character. Commit message, defaults to "Assigning review."
-#' @param branch Character. Name of branch the file should be committed to, defaults to `master`.
+#' @param branch Character. Name of branch the file should be committed to. If `NULL` (the default), the repository's default branch is used.
 #' @param overwrite Logical. Whether existing files in reviewers' repositories should be overwritten, defaults to `FALSE`.
 #'
 #' @examples
@@ -31,10 +31,10 @@
 peer_assign = function(org, roster, path = NULL, local_path_review = NULL,
                        prefix = "", suffix = "",
                        exclude_pattern = c(".gitignore", ".Rhistory", "*.Rproj", "*.html", "*.md", "*.pdf"),
-                       message = NULL,  branch = "master", overwrite = FALSE) {
+                       message = NULL,  branch = NULL, overwrite = FALSE) {
 
-  ghclass::arg_is_chr_scalar(org, prefix, suffix, branch)
-  ghclass::arg_is_chr_scalar(local_path_review, message, allow_null = TRUE)
+  ghclass::arg_is_chr_scalar(org, prefix, suffix)
+  ghclass::arg_is_chr_scalar(local_path_review, message, branch, allow_null = TRUE)
   ghclass::arg_is_chr(path, allow_null = TRUE)
   ghclass::arg_is_lgl_scalar(overwrite)
 

@@ -15,7 +15,7 @@
 #' @param prefix Character. Common repository name prefix.
 #' @param suffix Character. Common repository name suffix.
 #' @param message Character. Commit message, defaults to "Assigning review."
-#' @param branch Character. Name of branch the file should be committed to, defaults to `master`.
+#' @param branch Character. Name of branch the file should be committed to. If `NULL` (the default), the repository's default branch is used.
 #' @param overwrite Logical. Whether existing files in reviewers' repositories should be overwritten, defaults to `FALSE`.
 #'
 #' @examples
@@ -33,10 +33,10 @@
 #' @export
 #'
 peer_return = function(org, roster, path, form_review = NULL, local_path_rating = NULL, double_blind = TRUE,
-                       prefix = "", suffix = "", message = NULL, branch = "master", overwrite = FALSE) {
+                       prefix = "", suffix = "", message = NULL, branch = NULL, overwrite = FALSE) {
   ghclass::arg_is_chr(path)
-  ghclass::arg_is_chr_scalar(org, prefix, suffix, branch)
-  ghclass::arg_is_chr_scalar(message, form_review, local_path_rating, allow_null = TRUE)
+  ghclass::arg_is_chr_scalar(org, prefix, suffix)
+  ghclass::arg_is_chr_scalar(message, form_review, local_path_rating, branch, allow_null = TRUE)
   ghclass::arg_is_lgl_scalar(overwrite)
 
   prefix_review = format_rev(prefix, suffix)[['prefix_review']]
@@ -55,11 +55,11 @@ peer_return = function(org, roster, path, form_review = NULL, local_path_rating 
 
   # Take snapshot of reviewers' review repos
   repo_rev_og = unique(rdf[['repo_rev_review']])
-  repo_files_rev_og = purrr::map(repo_rev_og, ~ ghclass::repo_files(.x))
+  repo_files_rev_og = purrr::map(repo_rev_og, ~ ghclass::repo_files(.x, branch = branch))
 
   # Take snapshot of authors' repos
   repo_aut_og = unique(rdf[['repo_aut']])
-  repo_files_aut_og = purrr::map(repo_aut_og, ~ ghclass::repo_files(.x))
+  repo_files_aut_og = purrr::map(repo_aut_og, ~ ghclass::repo_files(.x, branch = branch))
 
   # get original content
   content_og = purrr::map(

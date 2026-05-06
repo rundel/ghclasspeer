@@ -8,7 +8,7 @@
 #' @param prefix Character. Common repository name prefix.
 #' @param suffix Character. Common repository name suffix.
 #' @param message Character. Commit message.
-#' @param branch Character. Name of branch the file should be committed to, defaults to `master`.
+#' @param branch Character. Name of branch the file should be committed to. If `NULL` (the default), the repository's default branch is used.
 #' @param overwrite Logical. Whether existing files in reviewers' repositories should be overwritten, defaults to `FALSE`.
 #' @param verbose Logical. Should success/failure messages be printed, defaults to `TRUE`.
 #'
@@ -24,7 +24,7 @@
 #'
 #' @export
 peer_file_add_rev = function(org, roster, local_path, prefix = "", suffix = "",
-                             message = NULL, branch = "master", overwrite = FALSE,
+                             message = NULL, branch = NULL, overwrite = FALSE,
                              verbose = TRUE) {
   ghclass::arg_is_chr_scalar(org, prefix, suffix)
   ghclass::arg_is_chr_scalar(message, branch, allow_null = TRUE)

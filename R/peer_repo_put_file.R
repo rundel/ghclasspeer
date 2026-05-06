@@ -17,9 +17,9 @@ peer_github_api_repo_put_file = function(repo, path, content, message, branch, s
 
 
 
-peer_repo_put_file = function(repo, path, content, message = NULL, branch = "master", sha, verbose = TRUE) {
-  ghclass::arg_is_chr_scalar(repo, path, branch)
-  ghclass::arg_is_chr_scalar(message, sha, allow_null = TRUE)
+peer_repo_put_file = function(repo, path, content, message = NULL, branch = NULL, sha, verbose = TRUE) {
+  ghclass::arg_is_chr_scalar(repo, path)
+  ghclass::arg_is_chr_scalar(message, branch, sha, allow_null = TRUE)
 
   if (is.null(message))
     message = ghclass::cli_glue("Adding file: {path}")

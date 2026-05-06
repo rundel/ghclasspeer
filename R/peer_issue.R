@@ -111,12 +111,15 @@ peer_issue_label_apply_msg = function(label_df) {
 }
 
 peer_issue_create = function(out, title, step = c("review", "rating"),
-                             org, prefix, suffix, branch = "master") {
-  ghclass::arg_is_chr_scalar(step, prefix, suffix, org, branch, title)
+                             org, prefix, suffix, branch = NULL) {
+  ghclass::arg_is_chr_scalar(step, prefix, suffix, org, title)
+  ghclass::arg_is_chr_scalar(branch, allow_null = TRUE)
 
   if (is.null(out[['repo']])) {
     cli::cli_alert_danger("Skipping issue creation: no files found for any repositories.")
   }
+
+  url_branch = if (is.null(branch)) "HEAD" else branch
 
   purrr::walk(
     unique(out[['repo']]),
@@ -124,8 +127,8 @@ peer_issue_create = function(out, title, step = c("review", "rating"),
       sub = out[out[['repo']] == r, ]
 
       url_start = list(
-        blob = paste0("https://github.com/", r, "/blob/", branch, "/"),
-        tree = paste0("https://github.com/", r, "/tree/", branch, "/"),
+        blob = paste0("https://github.com/", r, "/blob/", url_branch, "/"),
+        tree = paste0("https://github.com/", r, "/tree/", url_branch, "/"),
         commit = paste0("https://github.com/", r, "/commit/")
       )
 

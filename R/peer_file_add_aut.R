@@ -9,7 +9,7 @@
 #' @param prefix Character. Common repository name prefix.
 #' @param suffix Character. Common repository name suffix.
 #' @param message Character. Commit message.
-#' @param branch Character. Name of branch the file should be committed to, defaults to `master`.
+#' @param branch Character. Name of branch the file should be committed to. If `NULL` (the default), the repository's default branch is used.
 #' @param overwrite Logical. Whether existing files in reviewers' repositories should be overwritten, defaults to `FALSE`.
 #' @param verbose Logical. Should success/failure messages be printed, defaults to `TRUE`.
 #'
@@ -25,10 +25,10 @@
 #'
 #' @export
 peer_file_add_aut = function(org, roster, local_path, double_blind = TRUE, prefix = "", suffix = "",
-                             message = NULL, branch = "master", overwrite = FALSE, verbose = TRUE) {
+                             message = NULL, branch = NULL, overwrite = FALSE, verbose = TRUE) {
 
   ghclass::arg_is_chr_scalar(org, prefix, suffix)
-  ghclass::arg_is_chr_scalar(message, allow_null = TRUE)
+  ghclass::arg_is_chr_scalar(message, branch, allow_null = TRUE)
   ghclass::arg_is_chr(local_path)
   ghclass::arg_is_lgl(double_blind, overwrite, verbose)
 
@@ -46,7 +46,7 @@ peer_file_add_aut = function(org, roster, local_path, double_blind = TRUE, prefi
   purrr::walk(
     aut,
     function(aut) {
-      repo_files = ghclass::repo_files(aut)
+      repo_files = ghclass::repo_files(aut, branch = branch)
       if (!double_blind) {
         rev = rdf[['rev']][rdf[['repo_aut']] == aut]
       } else {

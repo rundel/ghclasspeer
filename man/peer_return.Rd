@@ -14,7 +14,7 @@ peer_return(
   prefix = "",
   suffix = "",
   message = NULL,
-  branch = "master",
+  branch = NULL,
   overwrite = FALSE
 )
 }
@@ -37,7 +37,7 @@ peer_return(
 
 \item{message}{Character. Commit message, defaults to "Assigning review."}
 
-\item{branch}{Character. Name of branch the file should be committed to, defaults to \code{master}.}
+\item{branch}{Character. Name of branch the file should be committed to. If \code{NULL} (the default), the repository's default branch is used.}
 
 \item{overwrite}{Logical. Whether existing files in reviewers' repositories should be overwritten, defaults to \code{FALSE}.}
 }
